@@ -7,7 +7,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 10px;
+            padding-bottom: 10px;
+            padding-top: 0%;
             margin: 0;
             background-color: #f5f5f5;
         }
@@ -68,22 +69,21 @@
 <body>
 
 <!--Top Bar-->
-    <table border="1" style="border-color: #06f10a; align-items: center;">
-        <tr style="color: #0b4810;">
-            <th width="50%"><button onclick="PDetailsMenu()">Personal Details</button></th>
-            <th  width="50%"><button onclick="CalMenu()" >Calculator</button></th>
-        </tr>
-    </table>
+<header style="align-items: baseline; display: flex; ">
+    <button onclick="PDetailsMenu()" style="margin-left: 0px; margin-right: 0px; border: 1px solid rgb(22, 224, 22); width: 100%;">Personal Details</button>
+    <button onclick="CalMenu()" style="margin-left: 0px; margin-right: 0px; border: 1px solid rgb(22, 224, 22); width: 100%;">Calculator</button>
+</header>
 
+<br>
 <!--Personal Details-->
 <div id="PersonalDetails"  style="display: block;">
         <form>
-            <table width="100%" style="align-items: center;">
+            <table width="100%" height="650px" style="align-items: center;">
                 <tr>
                     <th width="5%">No.</th>
-                    <th with="35%">Name</th>
+                    <th with="45%">Name</th>
                     <th width="20%">Rent</th>
-                    <th width="25%">Last Unit Read</th>
+                    <th width="15%">Last Unit Read</th>
                     <th width="15%">Last Unit Read Month</th>
                 </tr>
                 
@@ -282,11 +282,9 @@
     </table>
    
 
-<table width="100%">
-<tr>
+<div class="BillTables" style="display: flex; justify-content: space-between; align-items: baseline;">
     <!--Electricity Bill-->
-<td style="width: 50%;"> 
-    <table border="1">
+    <table border="1" style="margin-right: 5px;" height="500px" width="50%">
         <tr>
             <th colspan="4">Electricity Bill</th>
         </tr>
@@ -331,11 +329,10 @@
             <td id="TotalE" style="color:rgb(105, 38, 10); font-weight: bold;"></td>
         </tr>
     </table>
-</td>
+
 
     <!--Water Bill-->
-<td style="width: 50%;"> 
-    <table border="1">
+    <table border="1" height="500px" width="100%">
         <tr>
             <th colspan="4">Water Bill</th>
         </tr>
@@ -380,9 +377,7 @@
             <td id="TotalW" style="color: rgb(105, 38, 10); font-weight: bold;"></td>
         </tr>
     </table>
-</td>
-</tr>
-</table>
+</div>
 
 <h2>Sub Total:<text name="price" id="Total" style="color: Red;"></text></h2>
 
