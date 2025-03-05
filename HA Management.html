@@ -68,17 +68,18 @@
 
 <body>
 
-<!--Top Bar-->
+    <!--Top Bar-->
+<h3 style="color: rgb(187, 140, 22);"><center>Hemis Aparment Bill Management System</center></h3>
 <header style="align-items: baseline; display: flex; ">
-    <button onclick="PDetailsMenu()" style="margin-left: 0px; margin-right: 0px; border: 1px solid rgb(22, 224, 22); width: 100%;">Personal Details</button>
-    <button onclick="CalMenu()" style="margin-left: 0px; margin-right: 0px; border: 1px solid rgb(22, 224, 22); width: 100%;">Calculator</button>
+    <button id="PDButton" onclick="PDetailsMenu()" style="margin-left: 0px; margin-right: 0px; border-right: 1px solid #197621; border-radius: 0; width: 100%;">Personal Details</button>
+    <button id="CButton" onclick="CalMenu()" style="margin-left: 0px; margin-right: 0px; border:none; border-radius: 0; width: 100%;">Calculator</button>
 </header>
 
 <br>
 <!--Personal Details-->
-<div id="PersonalDetails"  style="display: block;">
+<div id="PersonalDetails"  style="display: block; padding-right: 10px; padding-bottom: 5px;">
         <form>
-            <table width="100%" height="650px" style="align-items: center;">
+            <table width="100%" height="690px" style="align-items: center;">
                 <tr>
                     <th width="5%">No.</th>
                     <th with="45%">Name</th>
@@ -173,7 +174,7 @@
 
 <!--Calculator-->
 
-<div id="Calculator" style="display: none;" width="100%">
+<div id="Calculator" style="display: none; padding: 5px;" width="100%">
     
     <table> 
         <tr><td colspan="3"><u><b>Personal Details</b></u></td> </tr>
@@ -394,16 +395,20 @@ Downlaod PDF</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-    //Personal Details Button
+
+//Personal Details Button
 function PDetailsMenu() {
     document.getElementById('PersonalDetails').style.display='block';
     document.getElementById('Calculator').style.display='none';
+    document.getElementById('PDButton').style.color = "#f5f5f5";
 }
+
 
 //Calculator Button
 function CalMenu() {
     document.getElementById('PersonalDetails').style.display='none';
     document.getElementById('Calculator').style.display='block';
+    document.getElementById('CButton').style.color = "#f5f5f5";
 }
 
 //Personal Details & Calculator Link Part
