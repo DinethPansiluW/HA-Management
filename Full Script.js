@@ -2,12 +2,15 @@
 function PDetailsMenu() {
     document.getElementById('PersonalDetails').style.display='block';
     document.getElementById('Calculator').style.display='none';
+    document.getElementById('PDButton').style.color = "#f5f5f5";
 }
+
 
 //Calculator Button
 function CalMenu() {
     document.getElementById('PersonalDetails').style.display='none';
     document.getElementById('Calculator').style.display='block';
+    document.getElementById('CButton').style.color = "#f5f5f5";
 }
 
 //Personal Details & Calculator Link Part
