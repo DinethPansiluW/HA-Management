@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HA Bill Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        input, select {
+            width: 100%;
+            height: 35px;
+            font-size: 16px;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+        th, td {
+            text-align: center;
+        }
+        /* Make tables scrollable on small screens */
+        .table-container {
+            overflow-x: auto;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #0b4810;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #197621;
+        }
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            th, td {
+                padding: 6px;
+            }
+            input, select {
+                font-size: 14px;
+                height: 30px;
+            }
+            button {
+                font-size: 14px;
+            }
+        }
+        .bold-input {
+            font-weight: bold !important;
+            font-family: Arial, sans-serif;
+            color: rgb(105, 38, 10);
+        }
+    </style>
+    </head>
+
+<body>
+
+<!--Top Bar-->
+    <table border="1" style="border-color: #06f10a; align-items: center;">
+        <tr style="color: #0b4810;">
+            <th width="50%"><button onclick="PDetailsMenu()">Personal Details</button></th>
+            <th  width="50%"><button onclick="CalMenu()" >Calculator</button></th>
+        </tr>
+    </table>
+
+<!--Personal Details-->
+<div id="PersonalDetails"  style="display: block;">
+        <form>
+            <table width="100%" style="align-items: center;">
+                <tr>
+                    <th width="5%">No.</th>
+                    <th with="35%">Name</th>
+                    <th width="20%">Rent</th>
+                    <th width="25%">Last Unit Read</th>
+                    <th width="15%">Last Unit Read Month</th>
+                </tr>
+                
+                <!-- Generate rows dynamically -->
+                <script>
+                    for (let i = 1; i <= 11; i++) {
+                        document.write(`
+                            <tr>
+                                <td>${i}</td>
+                                <td><input type="text" id="Name${i}"></td>
+                                <td><input type="number" id="Rent${i}"></td>
+                                <td><input type="number" id="Unit${i}"></td>
+                                <td>
+                                    <select id="Month${i}">
+                                        <option value="" disabled selected>Select Month</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        `);
+                    }
+                </script>
+                
+                <tr>
+                    <td></td>
+                    <td>
+                        <button id="Reset" type="Reset" style="
+                            background-color: #ec0a0a;
+                            color: white;
+                            padding: 10px 20px;
+                            border: none;
+                            border-radius: 5px;
+                            font-size: 16px;
+                            cursor: pointer;
+                            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                            transition: background-color 0.3s ease;">
+                            Reset
+                        </button>
+                    </td>
+                    <td style="text-align: right; padding-top: 20px;"></td>
+                    <td style="text-align: right; padding-top: 20px;">
+                        <button id="Save" onclick="saveToFile(event)" style="
+                            background-color: #4CAF50;
+                            color: white;
+                            padding: 10px 20px;
+                            border: none;
+                            border-radius: 5px;
+                            font-size: 16px;
+                            cursor: pointer;
+                            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                            transition: background-color 0.3s ease;">
+                            Save Settings
+                        </button>
+                    </td>
+                    <td style="text-align: left; padding-top: 20px;">
+                        <button id="Load" onclick="loadFromFile(event)" style="
+                            background-color: #984e05;
+                            color: white;
+                            padding: 10px 20px;
+                            border: none;
+                            border-radius: 5px;
+                            font-size: 16px;
+                            cursor: pointer;
+                            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                            transition: background-color 0.3s ease;">
+                            Load Settings
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            
+            
+        </form>
+        
+</div>
+
+<!--Calculator-->
+
+<div id="Calculator" style="display: none;" width="100%">
+    
+    <table> 
+        <tr><td colspan="3"><u><b>Personal Details</b></u></td> </tr>
+    <tr style="font-weight: 800;">
+        <td>Room No:</td>
+        <td>Name:</td>
+        <td>Month:</td>
+    </tr>
+    <tr>
+        <td>
+            <select id="roomNumberSelect" onchange="UnitCal();RoomNOChg()">
+                <option hidden value="0">Select</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+            </select>
+        </td>
+        <td>
+            <input name="name" id="Name" placeholder="Select Room No:" oninput="UnitCal()" readonly>
+        </td>
+        <td>
+            <select name="month" id="month" onchange="MonthChg()">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+
+            </select>
+        </td>
+    </tr>
+
+    <table>
+        <tr><td colspan="2"><hr></td></tr>
+        
+        <tr>
+            <td colspan="3"><u><b>Rent Calculation</b></u></td>
+        </tr>
+        <tr style="font-weight: 800;">
+            <td colspan="2">Rent</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div style="display: flex;">
+                <select id="RentSelect" onchange="UnitCal();RentValue()" class="bold-input">
+                    <option value="17500">17500</option>
+                    <option value="23000">23000</option>
+                    <option value="Other">Other </option>
+                </select>
+                    <input id="Rent" style="display: none;" type="number" oninput="UnitCal();RentValue();" placeholder="Insert Amount" class="bold-input">
+                </div>
+            </td>
+        </tr>
+        <tr style="font-weight: 800;">
+            <td>Service Charge</td>
+            <td>Fixed Charge</td>
+        </tr>
+        <tr>
+            <td><input id="Ser_Chg" value="300" type="number" oninput="UnitCal();" onfocus="hide300(this)" onblur="show300(this)" placeholder="Insert" class="bold-input"></td>
+            <td><input id="Fix_Chg" value="550"  type="number" oninput="UnitCal();" onfocus="hide550(this)" onblur="show550(this)" placeholder="Insert" class="bold-input"></td>
+        </tr>
+        <tr style="font-weight: 800;">
+            <td>Other Charges</td>
+            <td>Deduction (-)</td>
+        </tr>
+        <tr>
+        <tr>
+            <td><input id="Other_Chg" value="0" type="number" oninput="UnitCal();" onfocus="hideZero(this)" onblur="showZero(this)" placeholder="Insert" class="bold-input"></td>
+            <td><input id="Deduction" type="text" value="-0" oninput="enforceNegative(this); UnitCal()" class="bold-input" onfocus="hideMinusZero(this)" onblur="showMinusZero(this)"></td>
+        </tr>
+    </table>
+        
+
+    <!--Units Enter Starts-->
+    
+    <table>
+            <tr><td colspan="4"><hr></td></tr>
+            <tr><td colspan="4"><u><b>Electricity & Water Bill Calculation</b></u></td></tr>
+            <tr>
+                <th style="font-weight: 800;">Last Read</th>
+                <th style="font-weight: 800;">Current Read</th>
+                <td>&nbsp&nbsp</td>
+                <th style="font-weight: 800;">Units Consumption</th>
+            </tr>
+            <tr>
+                <td><input id="LastRead" oninput="UnitCal();" placeholder="Update From Personal Details" readonly></td>
+                <td><input id="CurrentRead" oninput="UnitCal();" placeholder="Insert Amount"></td>
+                <td>&nbsp&nbsp</td>
+                <td><input id="Units" placeholder="Plz Update Last & Current Unit Reads" readonly></td>
+            </tr>
+    </table>
+   
+
+<table width="100%">
+<tr>
+    <!--Electricity Bill-->
+<td style="width: 50%;"> 
+    <table border="1">
+        <tr>
+            <th colspan="4">Electricity Bill</th>
+        </tr>
+        <tr>
+            <th>Range</th>
+            <th>Qty</th>
+            <th>Price Per Unit</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <th>0-10 Units</th>
+            <td class="Q1"></td>
+            <td id="PE1"></td>
+            <td id="TE1"></td>
+        </tr>
+        <tr>
+            <th>11-20 Units</th>
+            <td class="Q2"></td>
+            <td id="PE2"></td>
+            <td id="TE2"></td>
+        </tr>
+        <tr>
+            <th>21-30 Units</th>
+            <td class="Q3"></td>
+            <td id="PE3"></td>
+            <td id="TE3"></td>
+        </tr>
+        <tr>
+            <th>31-40 Units</th>
+            <td class="Q4"></td>
+            <td id="PE4"></td>
+            <td id="TE4"></td>
+        </tr>
+        <tr>
+            <th>41 & Above</th>
+            <td class="Q5"></td>
+            <td id="PE5"></td>
+            <td id="TE5"></td>
+        </tr>
+        <tr>
+            <th colspan="3">Total</th>
+            <td id="TotalE" style="color:rgb(105, 38, 10); font-weight: bold;"></td>
+        </tr>
+    </table>
+</td>
+
+    <!--Water Bill-->
+<td style="width: 50%;"> 
+    <table border="1">
+        <tr>
+            <th colspan="4">Water Bill</th>
+        </tr>
+        <tr>
+            <th>Range</th>
+            <th>Qty</th>
+            <th>Price Per Unit</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <th>0-10 Units</th>
+            <td class="Q1"></td>
+            <td id="PW1"></td>
+            <td id="TW1"></td>
+        </tr>
+        <tr>
+            <th>11-20 Units</th>
+            <td class="Q2"></td>
+            <td id="PW2"></td>
+            <td id="TW2"></td>
+        </tr>
+        <tr>
+            <th>21-30 Units</th>
+            <td class="Q3"></td>
+            <td id="PW3"></td>
+            <td id="TW3"></td>
+        </tr>
+        <tr>
+            <th>31-40 Units</th>
+            <td class="Q4"></td>
+            <td id="PW4"></td>
+            <td id="TW4"></td>
+        </tr>
+        <tr>
+            <th>41 & Above</th>
+            <td class="Q5"></td>
+            <td id="PW5"></td>
+            <td id="TW5"></td>
+        </tr>
+        <tr>
+            <th colspan="3">Total</th>
+            <td id="TotalW" style="color: rgb(105, 38, 10); font-weight: bold;"></td>
+        </tr>
+    </table>
+</td>
+</tr>
+</table>
+
+<h2>Sub Total:<text name="price" id="Total" style="color: Red;"></text></h2>
+
+<button onclick="generatePDF();CalToDetail()" 
+style="background-color: #0b4810; color: white; padding: 10px 15px; font-size: 14px; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s;"
+onmouseover="this.style.backgroundColor='#197621'" 
+onmouseout="this.style.backgroundColor='#0b4810'">
+Downlaod PDF</button>
+
+
+<br><hr>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    //Personal Details Button
+function PDetailsMenu() {
+    document.getElementById('PersonalDetails').style.display='block';
+    document.getElementById('Calculator').style.display='none';
+}
+
+//Calculator Button
+function CalMenu() {
+    document.getElementById('PersonalDetails').style.display='none';
+    document.getElementById('Calculator').style.display='block';
+}
+
+//Personal Details & Calculator Link Part
+function RoomNOChg() {
+    document.getElementById("CurrentRead").value="";
+    document.getElementById("Units").value="";
+
+    let RN =  parseInt(document.getElementById('roomNumberSelect').value) ;
+    document.getElementById('Name').value = document.getElementById('Name'+RN).value;
+    document.getElementById("LastRead").value = document.getElementById("Unit"+RN).value;
+
+    
+    let m = parseInt(document.getElementById('month').value);
+    let lm = parseInt(document.getElementById('Month'+RN).value);
+
+    document.getElementById('month').value = lm+1;
+
+    if (lm===12) {
+        document.getElementById('month').value = 1;
+    }
+
+    let rent =parseInt(document.getElementById('Rent'+RN).value);
+    if (rent===17500) {
+        document.getElementById('RentSelect').value = "17500";
+        document.getElementById('Rent').style.display="none";
+        document.getElementById('Rent').value="0";
+        document.getElementById('RentSelect').style.width="100%";
+    }
+        else if (rent===23000) {
+            document.getElementById('RentSelect').value = "23000";
+            document.getElementById('Rent').style.display="none";
+            document.getElementById('Rent').value="0";
+            document.getElementById('RentSelect').style.width="100%";
+        }
+            else {
+                document.getElementById('RentSelect').value = "Other";
+                document.getElementById('Rent').style="block";
+                document.getElementById('Rent').value = document.getElementById('Rent'+RN).value;
+            }
+}
+
+function MonthChg() {
+    let RN =  parseInt(document.getElementById('roomNumberSelect').value) ;
+    let m = parseInt(document.getElementById('month').value);
+    let lm = parseInt(document.getElementById('Month'+RN).value);
+
+    if (m===lm+1) {
+        document.getElementById("LastRead").value = document.getElementById("Unit"+RN).value;
+    }
+        else if (lm===12 & m===1) {
+            m=1;
+            document.getElementById("LastRead").value = document.getElementById("Unit"+RN).value;
+        }
+            else {
+                document.getElementById("LastRead").value = "";
+                document.getElementById("CurrentRead").value="";
+                document.getElementById("Units").value="";
+            }
+}
+
+function CalToDetail() {
+    let RN =  parseInt(document.getElementById('roomNumberSelect').value) ;
+    let m = parseInt(document.getElementById('month').value);
+    let lm = parseInt(document.getElementById('Month'+RN).value);
+   
+    
+    document.getElementById("Unit"+RN).value = document.getElementById("CurrentRead").value;
+    document.getElementById('Month'+RN).value = lm+1;
+
+    if (lm===12) {
+        document.getElementById('Month'+RN).value = 1;
+    };
+    
+    if (RN===11) {
+    document.getElementById('PersonalDetails').style.display='block';
+    document.getElementById('Calculator').style.display='none';
+    }
+    
+    
+    }
+
+
+//Save and Load Settings
+function saveToFile(event) {
+    event.preventDefault();
+    let data = [];
+    for (let i = 1; i <= 11; i++) {
+        let name = document.getElementById(`Name${i}`).value;
+        let rent = document.getElementById(`Rent${i}`).value;
+        let unit = document.getElementById(`Unit${i}`).value;
+        let month = document.getElementById(`Month${i}`).value;
+        data.push({ name, rent, unit, month });
+    }
+
+    // Get current date and time for the filename
+    let now = new Date();
+    let year = now.getFullYear().toString().slice(-2);  // Last two digits of the year
+    let month = now.toLocaleString('default', { month: 'long' });  // Full month name
+    let date = String(now.getDate()).padStart(2, '0');  // Day with leading zero if needed
+    let time = now.toLocaleTimeString('en-GB', { hour12: false }).replace(/:/g, '-');  // Time in 24-hour format, replacing ':' with '-'
+
+    // Create the filename using the format
+    let filename = `${year}${month}${date}-${time}.json`;
+
+    let blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    let a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+function loadFromFile(event) {
+    event.preventDefault();
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+    input.addEventListener('change', function () {
+        let file = input.files[0];
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                let data = JSON.parse(e.target.result);
+                for (let i = 0; i < data.length; i++) {
+                    document.getElementById(`Name${i + 1}`).value = data[i].name;
+                    document.getElementById(`Rent${i + 1}`).value = data[i].rent;
+                    document.getElementById(`Unit${i + 1}`).value = data[i].unit;
+                    document.getElementById(`Month${i + 1}`).value = data[i].month;
+                }
+            };
+            reader.readAsText(file);
+        }
+    });
+    input.click();
+}
+
+
+
+//Calculation Part
+// Units Prices Assign Variables
+let PE1 = 130; let PW1 = 80;
+let PE2 = 100; 
+let PE3 = 80; 
+let PE4 = 60; 
+let PE5 = 50;
+
+document.getElementById('PE1').innerHTML = PE1;
+document.getElementById('PE2').innerHTML = PE2;
+document.getElementById('PE3').innerHTML = PE3;
+document.getElementById('PE4').innerHTML = PE4;
+document.getElementById('PE5').innerHTML = PE5;
+
+document.getElementById('PW1').innerHTML = PW1;
+document.getElementById('PW2').innerHTML = PW1;
+document.getElementById('PW3').innerHTML = PW1;
+document.getElementById('PW4').innerHTML = PW1;
+document.getElementById('PW5').innerHTML = PW1;
+
+// Calculate Units
+let Q1, TE1, TW1;
+let Q2, TE2, TW2;
+let Q3, TE3, TW3;
+let Q4, TE4, TW4;
+let Q5, TE5, TW5;
+let Units;
+let TotalE, TotalW, Total;
+let Rent;
+let Ser_Chg;
+let Fix_Chg;
+
+function RentValue() {
+    let RentSelect = document.getElementById('RentSelect');
+
+    if (RentSelect.value === "23000" || RentSelect.value === "17500") {
+        Rent = parseInt(RentSelect.value);
+        document.getElementById('Rent').style.display = 'none';
+        document.getElementById('RentSelect').style.width= "100%";
+    } 
+        else {
+            document.getElementById('Rent').style.display = 'block';
+            document.getElementById('RentSelect').style.width= "50%";
+            document.getElementById('Rent').style.width= "150%";
+            Rent = parseInt(document.getElementById('Rent').value);
+        }
+    }
+
+function Cal() {
+    RentValue() ;
+
+    Units = parseInt(document.getElementById('CurrentRead').value) - parseInt(document.getElementById('LastRead').value);
+    document.getElementById('Units').value = Units;
+
+    if (Units > 40) {
+        Q1 = 10; Q2 = 10; Q3 = 10; Q4 = 10; Q5 = Units - 40;
+    } else if (Units > 30) {
+        Q1 = 10; Q2 = 10; Q3 = 10; Q4 = Units - 30; Q5 = 0;
+    } else if (Units > 20) {
+        Q1 = 10; Q2 = 10; Q3 = Units - 20; Q4 = 0; Q5 = 0;
+    } else if (Units > 10) {
+        Q1 = 10; Q2 = Units - 10; Q3 = 0; Q4 = 0; Q5 = 0;
+    } else if (Units >= 0) {
+        Q1 = Units; Q2 = 0; Q3 = 0; Q4 = 0; Q5 = 0;
+    } else {
+        Total = Rent + Ser_Chg + Fix_Chg + Other_Chg + Deduction;
+
+        document.querySelectorAll('.Q1').forEach(el => el.innerHTML = " ");
+        document.querySelectorAll('.Q2').forEach(el => el.innerHTML = " ");
+        document.querySelectorAll('.Q3').forEach(el => el.innerHTML = " ");
+        document.querySelectorAll('.Q4').forEach(el => el.innerHTML = " ");
+        document.querySelectorAll('.Q5').forEach(el => el.innerHTML = " ");
+
+        document.getElementById('TE1').innerHTML = " ";
+        document.getElementById('TE2').innerHTML = " ";
+        document.getElementById('TE3').innerHTML = " ";
+        document.getElementById('TE4').innerHTML = " ";
+        document.getElementById('TE5').innerHTML = " ";
+
+        document.getElementById('TW1').innerHTML = " ";
+        document.getElementById('TW2').innerHTML = " ";
+        document.getElementById('TW3').innerHTML = " ";
+        document.getElementById('TW4').innerHTML = " ";
+        document.getElementById('TW5').innerHTML = " "; 
+
+        document.getElementById('TotalE').innerHTML = "Update Inputs";
+        document.getElementById('TotalW').innerHTML = "Update Inputs";
+        document.getElementById('Total').innerHTML = "Rs. "+Total;
+
+        document.getElementById('Units').value="";
+
+    }
+}
+
+function UnitCal() {
+    Cal();
+    
+    Ser_Chg = parseInt(document.getElementById('Ser_Chg').value);
+    Fix_Chg = parseInt(document.getElementById('Fix_Chg').value);
+    Other_Chg = parseInt(document.getElementById('Other_Chg').value);
+    Deduction = parseFloat(document.getElementById('Deduction').value);
+
+    TE1 = Q1 * PE1;
+    TE2 = Q2 * PE2;
+    TE3 = Q3 * PE3;
+    TE4 = Q4 * PE4;
+    TE5 = Q5 * PE5;
+
+    TW1 = Q1 * PW1;
+    TW2 = Q2 * PW1;
+    TW3 = Q3 * PW1;
+    TW4 = Q4 * PW1;
+    TW5 = Q5 * PW1;
+
+    TotalE = TE1 + TE2 + TE3 + TE4 + TE5;
+    TotalW = (Q1 + Q2 + Q3 + Q4 + Q5) * PW1;
+    Total = TotalE + TotalW  + Rent + Ser_Chg + Fix_Chg + Other_Chg + Deduction;
+
+    document.querySelectorAll('.Q1').forEach(el => el.innerHTML = Q1);
+    document.querySelectorAll('.Q2').forEach(el => el.innerHTML = Q2);
+    document.querySelectorAll('.Q3').forEach(el => el.innerHTML = Q3);
+    document.querySelectorAll('.Q4').forEach(el => el.innerHTML = Q4);
+    document.querySelectorAll('.Q5').forEach(el => el.innerHTML = Q5);
+
+    document.getElementById('TE1').innerHTML = TE1;
+    document.getElementById('TE2').innerHTML = TE2;
+    document.getElementById('TE3').innerHTML = TE3;
+    document.getElementById('TE4').innerHTML = TE4;
+    document.getElementById('TE5').innerHTML = TE5;
+
+    document.getElementById('TW1').innerHTML = TW1;
+    document.getElementById('TW2').innerHTML = TW2;
+    document.getElementById('TW3').innerHTML = TW3;
+    document.getElementById('TW4').innerHTML = TW4;
+    document.getElementById('TW5').innerHTML = TW5; 
+
+    document.getElementById('TotalE').innerHTML = TotalE;
+    document.getElementById('TotalW').innerHTML = TotalW;
+    document.getElementById('Total').innerHTML = " Rs." + Total;
+
+    Cal();
+
+    
+};
+
+//Deduction Start (-)
+function enforceNegative(input) {
+    // Ensure the value always starts with '-'
+    if (!input.value.startsWith('-')) {
+        input.value = '-' + input.value.replace(/-/g, '');
+    }
+
+    // Remove non-numeric characters except the leading '-'
+    input.value = '-' + input.value.substring(1).replace(/\D/g, '');
+}
+
+
+//Input Fields Hide Show
+function hideZero(input) {
+    if (input.value === "0") {
+        input.value = "";
+    }
+}
+
+
+function showZero(input) {
+    if (input.value === "") {
+        input.value = "0";
+    }
+}
+
+function hide550(input) {
+    if (input.value === "550") {
+        input.value = "";
+    }
+}
+
+
+function show550(input) {
+    if (input.value === "") {
+        input.value = "550";
+    }
+}
+
+function hide300(input) {
+    if (input.value === "300") {
+        input.value = "";
+    }
+}
+
+
+function show300(input) {
+    if (input.value === "") {
+        input.value = "300";
+    }
+}
+
+
+function hide22500(input) {
+    if (input.value === "22500") {
+        input.value = "";
+    }
+}
+
+
+function show22500(input) {
+    if (input.value === "") {
+        input.value = "22500";
+    }
+}
+
+function hideMinusZero(input) {
+    if (input.value === "-0") {
+        input.value = "-";
+    }
+}
+
+
+function showMinusZero(input) {
+    if (input.value === "-") {
+        input.value = "-0";
+    }
+}
+
+
+//Default This Month
+document.addEventListener("DOMContentLoaded", function () {
+    const monthSelect = document.getElementById("month");
+    const currentMonth = new Date().toLocaleString("en-US", { month: "long" });
+
+    for (let option of monthSelect.options) {
+        if (option.text === currentMonth) {
+            option.selected = true;
+            break;
+        }
+    }
+});
+
+
+//Coma in Number 3 by 3
+function formatNumber(input) {
+    let value = input.value.replace(/,/g, "");
+    if (!isNaN(value) && value !== "") {
+        input.value = Number(value).toLocaleString();
+    }
+}
+
+
+
+// Generate PDF 
+
+
+function generatePDF() {
+    // Get input values
+    const roomNumber = document.querySelector("#roomNumberSelect").value.trim();
+    const name = document.getElementById("Name").value.trim().replace(/\s+/g, " ").replace(/_/g, " "); // Replace underscores with spaces
+    const monthElement = document.querySelector("select[name='month']");
+    const month = monthElement && monthElement.value !== "0" ? monthElement.options[monthElement.selectedIndex].text.trim() : "";
+    const lastRead = document.getElementById("LastRead").value.trim();
+    const currentRead = document.getElementById("CurrentRead").value.trim();
+    const unitsConsumed = document.getElementById("Units").value.trim();
+    const rentSelect = document.getElementById("RentSelect");
+    const rentValue = rentSelect.value === "Other" ? parseFloat(document.getElementById("Rent").value) || 0 : parseFloat(rentSelect.value);
+    const serviceCharge = parseFloat(document.getElementById("Ser_Chg").value) || 0;
+    const fixedCharge = parseFloat(document.getElementById("Fix_Chg").value) || 0;
+    const electricityCharge = parseFloat(document.getElementById("TotalE").textContent) || 0;
+    const waterCharge = parseFloat(document.getElementById("TotalW").textContent) || 0;
+    const otherCharges = parseFloat(document.getElementById("Other_Chg").value) || 0;
+    const deduction = parseFloat(document.getElementById("Deduction").value) || 0;
+
+    // Format numbers with commas (no decimals)
+    const formatCurrency = (value) => value.toLocaleString('en-IN', { style: 'currency', currency: 'INR' }).replace('₹', 'Rs.').replace('.00', '');
+
+    // Check for empty fields
+    let emptyFields = [];
+    if (!roomNumber || roomNumber === "0") emptyFields.push("Room Number");
+    if (!name) emptyFields.push("Name");
+    if (!month || month === "") emptyFields.push("Month");
+    if (!lastRead) emptyFields.push("Last Meter Reading");
+    if (!currentRead) emptyFields.push("Current Meter Reading");
+    if (!unitsConsumed) emptyFields.push("Units Consumed");
+
+    if (emptyFields.length > 0) {
+        let message = "The following fields are empty:\n" + emptyFields.join("\n");
+        alert(message);
+        return;
+    }
+
+    const totalRent = rentValue + serviceCharge + fixedCharge + electricityCharge + waterCharge + otherCharges + deduction;
+
+    // Generate PDF content
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Get the current date and time from the device
+    const today = new Date();
+
+    // Format the date as "March 3rd 2025"
+    const day = today.getDate();
+    const monthName = today.toLocaleString('default', { month: 'long' });
+    const year = today.getFullYear();
+    
+    const suffix = (day) => {
+        if (day >= 11 && day <= 13) return 'th';
+        switch (day % 10) {
+            case 1: return 'st';
+            case 2: return 'nd';
+            case 3: return 'rd';
+            default: return 'th';
+        }
+    };
+    const formattedDate = `${monthName} ${day}${suffix(day)} ${year}`;
+
+    // Format the time as "04:46:56 PM"
+    const optionsTime = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+    const formattedTime = today.toLocaleTimeString('en-US', optionsTime);
+
+    // Get last two digits of the current year
+    const yearLastTwoDigits = today.getFullYear().toString().slice(-2);
+
+    // Set Hemis Apartment Title (Bold & Green)
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(27);
+    doc.setTextColor(0, 153, 0); // Green color
+    const apartmentTitle = "Hemis Apartment";
+    const titleWidth = doc.getTextWidth(apartmentTitle);
+    const pageWidth = doc.internal.pageSize.width;
+    doc.text(apartmentTitle, (pageWidth - titleWidth) / 2, 15); // Centered at top
+
+    // Set Rent Title (Blue, Size 14)
+    doc.setFontSize(21);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 255); // Blue color
+    const rentTitle = `${month}'${yearLastTwoDigits} Rent`;
+    const rentTitleWidth = doc.getTextWidth(rentTitle);
+    doc.text(rentTitle, (pageWidth - rentTitleWidth) / 2, 25); // Centered below apartment title
+
+    // Set Date and Time (Blue, Size 14)
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 255); // Blue color
+    const dateTimeText = `${formattedDate}, ${formattedTime}`;
+    const dateTimeWidth = doc.getTextWidth(dateTimeText);
+    doc.text(dateTimeText, (pageWidth - dateTimeWidth) / 2, 35); // Centered below rent title
+
+    // Line Separator (Soft Thin Line)
+    doc.setLineWidth(0.5);
+    doc.line(10, 40, 200, 40);
+    doc.setFontSize(18);
+
+    // Column for aligning colons
+    const labelX = 10;
+    const valueX = 70;
+
+    // Personal Details Section (Black)
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 0); // Black color for text
+    doc.text("Room No.:", labelX, 50);
+    doc.text("Name:", labelX, 60);
+    doc.text("Month of Bill:", labelX, 70);
+    doc.text("Meter Now:", labelX, 80);
+    doc.text("Unit Used:", labelX, 90);
+
+    // Personal Info (Normal Font)
+    doc.setFont("helvetica", "normal");
+    doc.text(roomNumber, valueX, 50);
+    doc.text(name, valueX, 60);
+    doc.text(month, valueX, 70);
+    doc.text(currentRead, valueX, 80);
+    doc.text(unitsConsumed, valueX, 90);
+
+    // Bill Breakdown Header (Blue, Size 14)
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 255); // Blue color
+    doc.text("Bill Breakdown:", labelX, 110);
+
+    // Bill Details Section (Black)
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 0); // Black color for text
+    doc.text("Rent:", labelX, 120);
+    doc.text("Service Charge:", labelX, 130);
+    doc.text("Fixed Charge:", labelX, 140);
+    doc.text("Electricity Charge:", labelX, 150);
+    doc.text("Water Charge:", labelX, 160);
+    doc.text("Other Charges:", labelX, 170);
+    doc.text("Deduction:", labelX, 180);
+
+    // Bill Info in Normal font
+    doc.setFont("helvetica", "normal");
+    doc.text(formatCurrency(rentValue), valueX, 120);
+    doc.text(formatCurrency(serviceCharge), valueX, 130);
+    doc.text(formatCurrency(fixedCharge), valueX, 140);
+    doc.text(formatCurrency(electricityCharge), valueX, 150);
+    doc.text(formatCurrency(waterCharge), valueX, 160);
+    doc.text(formatCurrency(otherCharges), valueX, 170);
+    doc.text(formatCurrency(deduction), valueX, 180);
+
+    // Total Bill Section (Red, Size 14 Bold)
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(23);
+    doc.setTextColor(255, 0, 0); // Red color for the total
+    
+    doc.text(`Total Bill: Rs. ${totalRent.toLocaleString('en-IN')}`, labelX, 200);
+
+    // Draw an ash-colored line before the "Thanks" message
+    doc.setDrawColor(169, 169, 169); // Ash color
+    doc.setLineWidth(0.5);
+    doc.line(10, 210, 200, 210); // Horizontal line
+
+    // Add "Thanks for using Our Service!" message (Ash Color)
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(128, 128, 128); // Ash color
+    doc.setFontSize(20);
+    doc.text("Thanks For Using Our Service!", (pageWidth - doc.getTextWidth("Thanks for using Our Service!")) / 2, 220);
+
+    // Generate the filename in the format: Room(number)_Name_(Month)'(Year last two digits).pdf
+    const filename = `Room${roomNumber}_${name}_${month}'${yearLastTwoDigits}.pdf`;
+
+    // Save the document with the generated filename
+    doc.save(filename);
+}
+
+
+</script>
+
+</body>
+</html>
