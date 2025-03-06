@@ -1,7 +1,7 @@
 # HA-Management System (Bill Calculator)
 ---
 
-This is an **Apartment Bill Management System**. It works **offline**. You only need to download the **HA_Management.html** file.  
+This is an **Apartment Bill Management System**. It works **offline**. You only need to download the **HA Management.html** file.  
 
 Other files are parts of the full file but are not linked; they are only **older copies**.  
 
