@@ -80,6 +80,8 @@ function CalToDetail() {
     document.getElementById("Unit"+RN).value = document.getElementById("CurrentRead").value;
     document.getElementById('Month'+RN).value = lm+1;
 
+    document.getElementById('SaveAlert').style.display="block";
+
     if (lm===12) {
         document.getElementById('Month'+RN).value = 1;
     };
@@ -87,14 +89,24 @@ function CalToDetail() {
     if (RN===11) {
     document.getElementById('PersonalDetails').style.display='block';
     document.getElementById('Calculator').style.display='none';
+    alert("Save the Personal settings for next month now.");
+    document.getElementById('SaveAlert').innerHTML="!!You Must Save!!&nbsp"
+    document.getElementById('SaveAlert').style.color="red";
+
+    let height = document.body.scrollHeight;
+    window.scrollTo(0, height);
+
     }
-    
     
     }
 
 
 //Save Settings Button
+
 function saveToFile(event) {
+    document.getElementById('SaveAlert').innerHTML='Saved Thank You :)';
+    document.getElementById('SaveAlert').style.color="Green";
+    
     let  check = confirm('Are you sure you want to save?\nBefore saving, please check that all fields are updated.');
     if (check==true){
     
@@ -129,6 +141,7 @@ function saveToFile(event) {
     else {
         event.preventDefault();
     }
+
 }
 
 //Load Setings Button

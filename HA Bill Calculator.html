@@ -127,7 +127,9 @@
     <!--Buttons-->
                 
         <tr>
-            <td></td><td></td>
+            <td></td>
+            <td><text id="SaveAlert"  style="color: #ec0a0a;font-size: 30px; text-align: right; font-weight: bolder; display: none;">
+                !! Not Saved !!&nbsp</text></td>
             <td colspan="3" style="text-align: right;">
                 <div style="display: flex; justify-content: flex-end; gap: 10px;">
                 <button id="Save" onclick="saveToFile(event)" style="
@@ -140,7 +142,7 @@
                     cursor: pointer;
                     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
                     transition: background-color 0.3s ease;">
-                    Save Settings
+                    Save Details
                 </button>
             
                 <button id="Load" onclick="loadFromFile(event)" style="
@@ -153,7 +155,7 @@
                     cursor: pointer;
                     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
                     transition: background-color 0.3s ease;">
-                    Load Settings
+                    Load Details
                 </button>
                 </div>
             </td>
