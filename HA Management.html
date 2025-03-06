@@ -127,7 +127,9 @@
     <!--Buttons-->
                 
         <tr>
-            <td></td><td></td>
+            <td></td>
+            <td><text id="SaveAlert"  style="color: #ec0a0a;font-size: 30px; text-align: right; font-weight: bolder; display: none;">
+                !! Not Saved !!&nbsp</text></td>
             <td colspan="3" style="text-align: right;">
                 <div style="display: flex; justify-content: flex-end; gap: 10px;">
                 <button id="Save" onclick="saveToFile(event)" style="
@@ -140,7 +142,7 @@
                     cursor: pointer;
                     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
                     transition: background-color 0.3s ease;">
-                    Save Settings
+                    Save Details
                 </button>
             
                 <button id="Load" onclick="loadFromFile(event)" style="
@@ -153,7 +155,7 @@
                     cursor: pointer;
                     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
                     transition: background-color 0.3s ease;">
-                    Load Settings
+                    Load Details
                 </button>
                 </div>
             </td>
@@ -399,11 +401,9 @@ Downlaod PDF</button>
 <br><hr>
 </div>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-
-//Personal Details Button
+    //Personal Details Button
 function PDetailsMenu() {
     document.getElementById('PersonalDetails').style.display='block';
     document.getElementById('Calculator').style.display='none';
@@ -485,6 +485,8 @@ function CalToDetail() {
     document.getElementById("Unit"+RN).value = document.getElementById("CurrentRead").value;
     document.getElementById('Month'+RN).value = lm+1;
 
+    document.getElementById('SaveAlert').style.display="block";
+
     if (lm===12) {
         document.getElementById('Month'+RN).value = 1;
     };
@@ -492,14 +494,24 @@ function CalToDetail() {
     if (RN===11) {
     document.getElementById('PersonalDetails').style.display='block';
     document.getElementById('Calculator').style.display='none';
+    alert("Save the Personal settings for next month now.");
+    document.getElementById('SaveAlert').innerHTML="!!You Must Save!!&nbsp"
+    document.getElementById('SaveAlert').style.color="red";
+
+    let height = document.body.scrollHeight;
+    window.scrollTo(0, height);
+
     }
-    
     
     }
 
 
 //Save Settings Button
+
 function saveToFile(event) {
+    document.getElementById('SaveAlert').innerHTML='Saved Thank You :)';
+    document.getElementById('SaveAlert').style.color="Green";
+    
     let  check = confirm('Are you sure you want to save?\nBefore saving, please check that all fields are updated.');
     if (check==true){
     
@@ -534,6 +546,7 @@ function saveToFile(event) {
     else {
         event.preventDefault();
     }
+
 }
 
 //Load Setings Button
@@ -994,10 +1007,9 @@ function generatePDF() {
 }
 
 
+
+
 </script>
 
-<script>
-    
-</script>
 </body>
 </html>
