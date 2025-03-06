@@ -1,8 +1,9 @@
 window.onload = function () {
     setTimeout(() => {
         window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
-    }, 400);
+    }, 100);
 };
+
 
 
 //Personal Details Button
@@ -19,6 +20,16 @@ function CalMenu() {
     document.getElementById('Calculator').style.display='block';
     document.getElementById('CButton').style.color = "#f5f5f5";
 }
+
+/*Personal Details On Chnage Unsaved Message
+document.querySelectorAll("#PersonalDetails input").forEach(input => {
+    input.addEventListener("input", handleInputChange);
+});
+
+function handleInputChange() {
+    document.getElementById('SaveAlert').style.display= 'block';
+}*/
+
 
 //Personal Details & Calculator Link Part
 function RoomNOChg() {
@@ -87,6 +98,8 @@ function CalToDetail() {
     document.getElementById('Month' + RN).value = lm + 1;
 
     document.getElementById('SaveAlert').style.display = "block";
+    document.getElementById('SaveAlert').innerHTML='!! Not Saved !!&nbsp';
+    document.getElementById('SaveAlert').style.color="red";
 
     if (lm === 12) {
         document.getElementById('Month' + RN).value = 1;
@@ -101,7 +114,7 @@ function CalToDetail() {
 
         setTimeout(() => {
             window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
-        }, 400);
+        }, 100);
     }
 }
 
