@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Dr. Chamara",
+    "rent": "20000",
+    "unit": "1127",
+    "month": "2"
+  },
+  {
+    "name": "Mr. Harshana",
+    "rent": "23000",
+    "unit": "866",
+    "month": "2"
+  },
+  {
+    "name": "Mr. Nisal",
+    "rent": "21000",
+    "unit": "637",
+    "month": "2"
+  },
+  {
+    "name": "Mr. Suchira",
+    "rent": "20000",
+    "unit": "453",
+    "month": "2"
+  },
+  {
+    "name": "Mr. Dhanush",
+    "rent": "25000",
+    "unit": "874",
+    "month": "2"
+  },
+  {
+    "name": "Mr. Farzan",
+    "rent": "17000",
+    "unit": "1147",
+    "month": "2"
+  },
+  {
+    "name": "Mr. Tharindu",
+    "rent": "15000",
+    "unit": "184",
+    "month": "2"
+  },
+  {
+    "name": "Mr. Wijaya Sri",
+    "rent": "15000",
+    "unit": "158",
+    "month": "2"
+  },
+  {
+    "name": "Mr. Anuththara",
+    "rent": "17000",
+    "unit": "283",
+    "month": "2"
+  },
+  {
+    "name": "Mr. Akila",
+    "rent": "16000",
+    "unit": "351",
+    "month": "2"
+  },
+  {
+    "name": "Mr. Malindu",
+    "rent": "17500",
+    "unit": "262",
+    "month": "2"
+  }
+]
