@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electricity & Water Bill Calculator</title>
+    <title>HA Bill Management System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            padding: 10px;
+            padding-bottom: 10px;
+            padding-top: 0%;
             margin: 0;
             background-color: #f5f5f5;
         }
@@ -24,7 +25,6 @@
             box-sizing: border-box;
         }
         th, td {
-            padding: 10px;
             text-align: center;
         }
         /* Make tables scrollable on small screens */
@@ -48,7 +48,7 @@
         /* Responsive Design */
         @media screen and (max-width: 768px) {
             th, td {
-                padding: 8px;
+                padding: 6px;
             }
             input, select {
                 font-size: 14px;
@@ -63,28 +63,35 @@
             font-family: Arial, sans-serif;
             color: rgb(105, 38, 10);
         }
+        .PersonalTable {
+            width: 100%;
+            overflow-x: auto; /* Enables horizontal scrolling on small screens */
+            -webkit-overflow-scrolling: touch;
+        }
     </style>
     </head>
 
 <body>
 
-    <table>
-        <tr>
-            <th><button onclick="PDetailsMenu()">Personal Details</button></th>
-            <th><button onclick="CalMenu()">Calculator</button></th>
-        </tr>
-    </table>
+    <!--Top Bar-->
+<h3 style="color: rgb(187, 140, 22);"><center>Hemis Aparment Bill Management System</center></h3>
+<header style="align-items: baseline; display: flex; ">
+    <button id="PDButton" onclick="PDetailsMenu()" style="margin-left: 0px; margin-right: 0px; border-right: 1px solid #197621; border-radius: 0; width: 100%;">Personal Details</button>
+    <button id="CButton" onclick="CalMenu()" style="margin-left: 0px; margin-right: 0px; border:none; border-radius: 0; width: 100%;">Calculator</button>
+</header>
 
+<br>
 <!--Personal Details-->
-<div id="PersonalDetails"  style="display: block;">
+<div id="PersonalDetails"  style="display: block; padding-right: 2px; padding-bottom: 5px; padding-left: 2px;">
         <form>
-            <table>
+
+            <table class="PersonalTable" width="100%" height="690px" style="align-items: center;">
                 <tr>
-                    <th>Number</th>
-                    <th>Name</th>
-                    <th>Rent</th>
-                    <th>Last Unit Read</th>
-                    <th>Last Unit Read Month</th>
+                    <th width="5%">No.</th>
+                    <th with="32%">Name</th>
+                    <th width="22%%">Rent</th>
+                    <th width="18%">Last Unit Read</th>
+                    <th width="23%">Last Unit Read Month</th>
                 </tr>
                 
                 <!-- Generate rows dynamically -->
@@ -92,7 +99,7 @@
                     for (let i = 1; i <= 11; i++) {
                         document.write(`
                             <tr>
-                                <td>Room ${i}</td>
+                                <td>${i}</td>
                                 <td><input type="text" id="Name${i}"></td>
                                 <td><input type="number" id="Rent${i}"></td>
                                 <td><input type="number" id="Unit${i}"></td>
@@ -117,62 +124,67 @@
                         `);
                     }
                 </script>
+    <!--Buttons-->
                 
-                <tr>
-                    <td>
-                        <button id="Reset" type="Reset" style="
-                            background-color: #ec0a0a;
-                            color: white;
-                            padding: 10px 20px;
-                            border: none;
-                            border-radius: 5px;
-                            font-size: 16px;
-                            cursor: pointer;
-                            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-                            transition: background-color 0.3s ease;">
-                            Reset
-                        </button>
-                    </td>
-                    <td style="text-align: right; padding-top: 20px;"></td>
-                    <td style="text-align: right; padding-top: 20px;">
-                        <button id="Save" onclick="saveToFile(event)" style="
-                            background-color: #4CAF50;
-                            color: white;
-                            padding: 10px 20px;
-                            border: none;
-                            border-radius: 5px;
-                            font-size: 16px;
-                            cursor: pointer;
-                            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-                            transition: background-color 0.3s ease;">
-                            Save Settings
-                        </button>
-                    </td>
-                    <td style="text-align: right; padding-top: 20px;">
-                        <button id="Load" onclick="loadFromFile(event)" style="
-                            background-color: #984e05;
-                            color: white;
-                            padding: 10px 20px;
-                            border: none;
-                            border-radius: 5px;
-                            font-size: 16px;
-                            cursor: pointer;
-                            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-                            transition: background-color 0.3s ease;">
-                            Load Settings
-                        </button>
-                    </td>
-                </tr>
-            </table>
+        <tr>
+            <td></td><td></td>
+            <td colspan="3" style="text-align: right;">
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button id="Save" onclick="saveToFile(event)" style="
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                    transition: background-color 0.3s ease;">
+                    Save Settings
+                </button>
             
+                <button id="Load" onclick="loadFromFile(event)" style="
+                    background-color: #984e05;
+                    color: white;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                    transition: background-color 0.3s ease;">
+                    Load Settings
+                </button>
+                </div>
+            </td>
+        </tr>   
             
-        </form>
-        
+        <tr>
+            <td></td><td></td><td></td><td></td>
+                <td>
+                    <button id="Reset" onclick="ResetButton()" type="Reset" style="
+                        background-color: #ec0a0a;
+                        color: white;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                        transition: background-color 0.3s ease;
+                        float: right;
+                        max-width: 320px;">
+                        Reset
+                    </button> 
+                </td>
+        </tr>
+    </table>
+</form>
 </div>
 
 <!--Calculator-->
 
-<div id="Calculator"  style="display: none;">
+<div id="Calculator" style="display: none; padding: 5px;" width="100%">
     
     <table> 
         <tr><td colspan="3"><u><b>Personal Details</b></u></td> </tr>
@@ -185,17 +197,14 @@
         <td>
             <select id="roomNumberSelect" onchange="UnitCal();RoomNOChg()">
                 <option hidden value="0">Select</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
+                <script>
+                    for (let i = 1; i <= 11; i++) {
+                        document.write(`
+                            <option value="${i}">${i}</option>
+                        `);
+                    }
+                </script>
+                
             </select>
         </td>
         <td>
@@ -281,17 +290,15 @@
     </table>
    
 
-<table>
-<tr>
+<div class="BillTables" style="display: flex; justify-content: space-between; align-items: baseline;">
     <!--Electricity Bill-->
-<td style="width: 50%;"> 
-    <table border="1">
+    <table border="1" style="margin-right: 5px;" height="500px" width="50%">
         <tr>
             <th colspan="4">Electricity Bill</th>
         </tr>
         <tr>
             <th>Range</th>
-            <th>Quantity</th>
+            <th>Qty</th>
             <th>Price Per Unit</th>
             <th>Total</th>
         </tr>
@@ -330,17 +337,16 @@
             <td id="TotalE" style="color:rgb(105, 38, 10); font-weight: bold;"></td>
         </tr>
     </table>
-</td>
+
 
     <!--Water Bill-->
-<td style="width: 50%;"> 
-    <table border="1">
+    <table border="1" height="500px" width="100%">
         <tr>
             <th colspan="4">Water Bill</th>
         </tr>
         <tr>
             <th>Range</th>
-            <th>Quantity</th>
+            <th>Qty</th>
             <th>Price Per Unit</th>
             <th>Total</th>
         </tr>
@@ -379,9 +385,7 @@
             <td id="TotalW" style="color: rgb(105, 38, 10); font-weight: bold;"></td>
         </tr>
     </table>
-</td>
-</tr>
-</table>
+</div>
 
 <h2>Sub Total:<text name="price" id="Total" style="color: Red;"></text></h2>
 
@@ -394,7 +398,6 @@ Downlaod PDF</button>
 
 <br><hr>
 </div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="Full Script.js"></script>

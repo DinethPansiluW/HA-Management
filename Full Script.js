@@ -17,7 +17,7 @@ function CalMenu() {
 function RoomNOChg() {
     document.getElementById("CurrentRead").value="";
     document.getElementById("Units").value="";
-    
+
     let RN =  parseInt(document.getElementById('roomNumberSelect').value) ;
     document.getElementById('Name').value = document.getElementById('Name'+RN).value;
     document.getElementById("LastRead").value = document.getElementById("Unit"+RN).value;
@@ -78,8 +78,7 @@ function CalToDetail() {
    
     
     document.getElementById("Unit"+RN).value = document.getElementById("CurrentRead").value;
-    console.log(m);
-    document.getElementById('Month'+RN).value = m;
+    document.getElementById('Month'+RN).value = lm+1;
 
     if (lm===12) {
         document.getElementById('Month'+RN).value = 1;
@@ -89,11 +88,16 @@ function CalToDetail() {
     document.getElementById('PersonalDetails').style.display='block';
     document.getElementById('Calculator').style.display='none';
     }
+    
+    
     }
 
 
-//Save and Load Settings
+//Save Settings Button
 function saveToFile(event) {
+    let  check = confirm('Are you sure you want to save?\nBefore saving, please check that all fields are updated.');
+    if (check==true){
+    
     event.preventDefault();
     let data = [];
     for (let i = 1; i <= 11; i++) {
@@ -122,7 +126,12 @@ function saveToFile(event) {
     a.click();
     document.body.removeChild(a);
 }
+    else {
+        event.preventDefault();
+    }
+}
 
+//Load Setings Button
 function loadFromFile(event) {
     event.preventDefault();
     let input = document.createElement('input');
@@ -145,6 +154,15 @@ function loadFromFile(event) {
         }
     });
     input.click();
+}
+
+
+//Reset Button Alert
+function ResetButton() {
+    let check = confirm('Are You Shuver?') ;
+    if (check == false) {
+        event.preventDefault();
+    }
 }
 
 
@@ -569,4 +587,6 @@ function generatePDF() {
     // Save the document with the generated filename
     doc.save(filename);
 }
+
+
 
