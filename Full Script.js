@@ -1,3 +1,10 @@
+window.onload = function () {
+    setTimeout(() => {
+        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
+    }, 400);
+};
+
+
 //Personal Details Button
 function PDetailsMenu() {
     document.getElementById('PersonalDetails').style.display='block';
@@ -72,33 +79,32 @@ function MonthChg() {
 }
 
 function CalToDetail() {
-    let RN =  parseInt(document.getElementById('roomNumberSelect').value) ;
+    let RN = parseInt(document.getElementById('roomNumberSelect').value);
     let m = parseInt(document.getElementById('month').value);
-    let lm = parseInt(document.getElementById('Month'+RN).value);
-   
-    
-    document.getElementById("Unit"+RN).value = document.getElementById("CurrentRead").value;
-    document.getElementById('Month'+RN).value = lm+1;
+    let lm = parseInt(document.getElementById('Month' + RN).value);
 
-    document.getElementById('SaveAlert').style.display="block";
+    document.getElementById("Unit" + RN).value = document.getElementById("CurrentRead").value;
+    document.getElementById('Month' + RN).value = lm + 1;
 
-    if (lm===12) {
-        document.getElementById('Month'+RN).value = 1;
-    };
-    
-    if (RN===11) {
-    document.getElementById('PersonalDetails').style.display='block';
-    document.getElementById('Calculator').style.display='none';
-    alert("Save the Personal settings for next month now.");
-    document.getElementById('SaveAlert').innerHTML="!!You Must Save!!&nbsp"
-    document.getElementById('SaveAlert').style.color="red";
+    document.getElementById('SaveAlert').style.display = "block";
 
-    let height = document.body.scrollHeight;
-    window.scrollTo(0, height);
-
+    if (lm === 12) {
+        document.getElementById('Month' + RN).value = 1;
     }
-    
+
+    if (RN === 11) {
+        document.getElementById('PersonalDetails').style.display = 'block';
+        document.getElementById('Calculator').style.display = 'none';
+        alert("Save the Personal settings for next month now.");
+        document.getElementById('SaveAlert').innerHTML = "!!You Must Save!!&nbsp";
+        document.getElementById('SaveAlert').style.color = "red";
+
+        setTimeout(() => {
+            window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
+        }, 400);
     }
+}
+
 
 
 //Save Settings Button
