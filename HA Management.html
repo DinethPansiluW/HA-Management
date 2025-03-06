@@ -80,31 +80,35 @@
     <button id="CButton" onclick="CalMenu()" style="margin-left: 0px; margin-right: 0px; border:none; border-radius: 0; width: 100%;">Calculator</button>
 </header>
 
-<br>
-<!--Personal Details-->
-<div id="PersonalDetails"  style="display: block; padding-right: 2px; padding-bottom: 5px; padding-left: 2px;">
-        <form>
 
-            <table class="PersonalTable" width="100%" height="690px" style="align-items: center;">
-                <tr>
-                    <th width="5%">No.</th>
-                    <th with="32%">Name</th>
-                    <th width="22%%">Rent</th>
-                    <th width="18%">Last Unit Read</th>
-                    <th width="23%">Last Unit Read Month</th>
-                </tr>
-                
-                <!-- Generate rows dynamically -->
+<!--Personal Details-->
+<div id="PersonalDetails"  style="display: block; padding-right: 10px; padding-bottom: 5px; padding-left: 10px;">
+    <hr>
+        <form>
+            
+            <table class="PersonalTable" height="690px" width="100%" style="border-collapse: collapse;" onchange="TableChnage()">
                 <script>
                     for (let i = 1; i <= 11; i++) {
                         document.write(`
                             <tr>
-                                <td>${i}</td>
-                                <td><input type="text" id="Name${i}"></td>
-                                <td><input type="number" id="Rent${i}"></td>
-                                <td><input type="number" id="Unit${i}"></td>
+                                <th colspan="2" style="border-top:'1"><u>Room ${i}</u></th>
+                            </tr>
+                            <tr>
+                                <th width="32%">Name</th>
+                                <th width="22%">Rent</th>
+                            </tr>
+                            <tr>
+                                <td><input type="text" id="Name${i}" style="width: 100%;"></td>
+                                <td><input type="number" id="Rent${i}" style="width: 100%;"></td>
+                            </tr>
+                            <tr>
+                                <th width="18%">Last Unit Read</th>
+                                <th width="23%">Last Unit Read Month</th>
+                            </tr>
+                            <tr>
+                                <td><input type="number" id="Unit${i}" style="width: 100%;"></td>
                                 <td>
-                                    <select id="Month${i}">
+                                    <select id="Month${i}" style="width: 100%;">
                                         <option value="" disabled selected>Select Month</option>
                                         <option value="1">January</option>
                                         <option value="2">February</option>
@@ -121,13 +125,21 @@
                                     </select>
                                 </td>
                             </tr>
+                            <tr>
+                                <td colspan="2"><hr></td>
+                            </tr>
                         `);
                     }
                 </script>
+            </table>
+            
+    
+    
     <!--Buttons-->
-                
+            
+    <table>
         <tr>
-            <td></td>
+            <td width="50%">&nbsp</td>
             <td><text id="SaveAlert"  style="color: #ec0a0a;font-size: 30px; text-align: right; font-weight: bolder; display: none;">
                 !! Not Saved !!&nbsp</text></td>
             <td colspan="3" style="text-align: right;">
@@ -163,7 +175,7 @@
             
         <tr>
             <td></td><td></td><td></td><td></td>
-                <td>
+                <td width="20%">
                     <button id="Reset" onclick="ResetButton()" type="Reset" style="
                         background-color: #ec0a0a;
                         color: white;
@@ -403,7 +415,15 @@ Downlaod PDF</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-    //Personal Details Button
+    window.onload = function () {
+    setTimeout(() => {
+        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
+    }, 100);
+};
+
+
+
+//Personal Details Button
 function PDetailsMenu() {
     document.getElementById('PersonalDetails').style.display='block';
     document.getElementById('Calculator').style.display='none';
@@ -417,6 +437,16 @@ function CalMenu() {
     document.getElementById('Calculator').style.display='block';
     document.getElementById('CButton').style.color = "#f5f5f5";
 }
+
+/*Personal Details On Chnage Unsaved Message
+document.querySelectorAll("#PersonalDetails input").forEach(input => {
+    input.addEventListener("input", handleInputChange);
+});
+
+function handleInputChange() {
+    document.getElementById('SaveAlert').style.display= 'block';
+}*/
+
 
 //Personal Details & Calculator Link Part
 function RoomNOChg() {
@@ -477,33 +507,34 @@ function MonthChg() {
 }
 
 function CalToDetail() {
-    let RN =  parseInt(document.getElementById('roomNumberSelect').value) ;
+    let RN = parseInt(document.getElementById('roomNumberSelect').value);
     let m = parseInt(document.getElementById('month').value);
-    let lm = parseInt(document.getElementById('Month'+RN).value);
-   
-    
-    document.getElementById("Unit"+RN).value = document.getElementById("CurrentRead").value;
-    document.getElementById('Month'+RN).value = lm+1;
+    let lm = parseInt(document.getElementById('Month' + RN).value);
 
-    document.getElementById('SaveAlert').style.display="block";
+    document.getElementById("Unit" + RN).value = document.getElementById("CurrentRead").value;
+    document.getElementById('Month' + RN).value = lm + 1;
 
-    if (lm===12) {
-        document.getElementById('Month'+RN).value = 1;
-    };
-    
-    if (RN===11) {
-    document.getElementById('PersonalDetails').style.display='block';
-    document.getElementById('Calculator').style.display='none';
-    alert("Save the Personal settings for next month now.");
-    document.getElementById('SaveAlert').innerHTML="!!You Must Save!!&nbsp"
+    document.getElementById('SaveAlert').style.display = "block";
+    document.getElementById('SaveAlert').innerHTML='!! Not Saved !!&nbsp';
     document.getElementById('SaveAlert').style.color="red";
 
-    let height = document.body.scrollHeight;
-    window.scrollTo(0, height);
+    if (lm === 12) {
+        document.getElementById('Month' + RN).value = 1;
+    }
 
+    if (RN === 11) {
+        document.getElementById('PersonalDetails').style.display = 'block';
+        document.getElementById('Calculator').style.display = 'none';
+        alert("Save the Personal settings for next month now.");
+        document.getElementById('SaveAlert').innerHTML = "!!You Must Save!!&nbsp";
+        document.getElementById('SaveAlert').style.color = "red";
+
+        setTimeout(() => {
+            window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
+        }, 100);
     }
-    
-    }
+}
+
 
 
 //Save Settings Button
@@ -1005,9 +1036,6 @@ function generatePDF() {
     // Save the document with the generated filename
     doc.save(filename);
 }
-
-
-
 
 </script>
 
