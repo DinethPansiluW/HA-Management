@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HA Bill Calculator</title>
+    <title>HA Bill Management System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -63,6 +63,11 @@
             font-family: Arial, sans-serif;
             color: rgb(105, 38, 10);
         }
+        .PersonalTable {
+            width: 100%;
+            overflow-x: auto; /* Enables horizontal scrolling on small screens */
+            -webkit-overflow-scrolling: touch;
+        }
     </style>
     </head>
 
@@ -77,15 +82,16 @@
 
 <br>
 <!--Personal Details-->
-<div id="PersonalDetails"  style="display: block; padding-right: 10px; padding-bottom: 5px;">
+<div id="PersonalDetails"  style="display: block; padding-right: 2px; padding-bottom: 5px; padding-left: 2px;">
         <form>
-            <table width="100%" height="690px" style="align-items: center;">
+
+            <table class="PersonalTable" width="100%" height="690px" style="align-items: center;">
                 <tr>
                     <th width="5%">No.</th>
-                    <th with="45%">Name</th>
-                    <th width="20%">Rent</th>
-                    <th width="15%">Last Unit Read</th>
-                    <th width="15%">Last Unit Read Month</th>
+                    <th with="32%">Name</th>
+                    <th width="22%%">Rent</th>
+                    <th width="18%">Last Unit Read</th>
+                    <th width="23%">Last Unit Read Month</th>
                 </tr>
                 
                 <!-- Generate rows dynamically -->
@@ -118,58 +124,62 @@
                         `);
                     }
                 </script>
+    <!--Buttons-->
                 
-                <tr>
-                    <td></td>
-                    <td>
-                        <button id="Reset" type="Reset" style="
-                            background-color: #ec0a0a;
-                            color: white;
-                            padding: 10px 20px;
-                            border: none;
-                            border-radius: 5px;
-                            font-size: 16px;
-                            cursor: pointer;
-                            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-                            transition: background-color 0.3s ease;">
-                            Reset
-                        </button>
-                    </td>
-                    <td style="text-align: right; padding-top: 20px;"></td>
-                    <td style="text-align: right; padding-top: 20px;">
-                        <button id="Save" onclick="saveToFile(event)" style="
-                            background-color: #4CAF50;
-                            color: white;
-                            padding: 10px 20px;
-                            border: none;
-                            border-radius: 5px;
-                            font-size: 16px;
-                            cursor: pointer;
-                            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-                            transition: background-color 0.3s ease;">
-                            Save Settings
-                        </button>
-                    </td>
-                    <td style="text-align: left; padding-top: 20px;">
-                        <button id="Load" onclick="loadFromFile(event)" style="
-                            background-color: #984e05;
-                            color: white;
-                            padding: 10px 20px;
-                            border: none;
-                            border-radius: 5px;
-                            font-size: 16px;
-                            cursor: pointer;
-                            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-                            transition: background-color 0.3s ease;">
-                            Load Settings
-                        </button>
-                    </td>
-                </tr>
-            </table>
+        <tr>
+            <td></td><td></td>
+            <td colspan="3" style="text-align: right;">
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button id="Save" onclick="saveToFile(event)" style="
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                    transition: background-color 0.3s ease;">
+                    Save Settings
+                </button>
             
+                <button id="Load" onclick="loadFromFile(event)" style="
+                    background-color: #984e05;
+                    color: white;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    cursor: pointer;
+                    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                    transition: background-color 0.3s ease;">
+                    Load Settings
+                </button>
+                </div>
+            </td>
+        </tr>   
             
-        </form>
-        
+        <tr>
+            <td></td><td></td><td></td><td></td>
+                <td>
+                    <button id="Reset" onclick="ResetButton()" type="Reset" style="
+                        background-color: #ec0a0a;
+                        color: white;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 5px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                        transition: background-color 0.3s ease;
+                        float: right;
+                        max-width: 320px;">
+                        Reset
+                    </button> 
+                </td>
+        </tr>
+    </table>
+</form>
 </div>
 
 <!--Calculator-->
@@ -187,17 +197,14 @@
         <td>
             <select id="roomNumberSelect" onchange="UnitCal();RoomNOChg()">
                 <option hidden value="0">Select</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
+                <script>
+                    for (let i = 1; i <= 11; i++) {
+                        document.write(`
+                            <option value="${i}">${i}</option>
+                        `);
+                    }
+                </script>
+                
             </select>
         </td>
         <td>
@@ -491,8 +498,11 @@ function CalToDetail() {
     }
 
 
-//Save and Load Settings
+//Save Settings Button
 function saveToFile(event) {
+    let  check = confirm('Are you sure you want to save?\nBefore saving, please check that all fields are updated.');
+    if (check==true){
+    
     event.preventDefault();
     let data = [];
     for (let i = 1; i <= 11; i++) {
@@ -521,7 +531,12 @@ function saveToFile(event) {
     a.click();
     document.body.removeChild(a);
 }
+    else {
+        event.preventDefault();
+    }
+}
 
+//Load Setings Button
 function loadFromFile(event) {
     event.preventDefault();
     let input = document.createElement('input');
@@ -544,6 +559,15 @@ function loadFromFile(event) {
         }
     });
     input.click();
+}
+
+
+//Reset Button Alert
+function ResetButton() {
+    let check = confirm('Are You Shuver?') ;
+    if (check == false) {
+        event.preventDefault();
+    }
 }
 
 
@@ -972,5 +996,8 @@ function generatePDF() {
 
 </script>
 
+<script>
+    
+</script>
 </body>
 </html>
