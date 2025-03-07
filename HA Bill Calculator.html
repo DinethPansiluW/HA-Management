@@ -209,7 +209,7 @@
     </tr>
     <tr>
         <td>
-            <select id="roomNumberSelect" onchange="UnitCal();RoomNOChg()">
+            <select id="roomNumberSelect" onchange="RoomNOChg();UnitCal()">
                 <option hidden value="0">Select</option>
                 <script>
                     for (let i = 1; i <= 11; i++) {
@@ -222,7 +222,7 @@
             </select>
         </td>
         <td>
-            <input name="name" id="Name" placeholder="Select Room No:" oninput="UnitCal()" readonly>
+            <input name="name" id="Name" placeholder="Update Personal Details & Select Room No." oninput="UnitCal()" readonly>
         </td>
         <td>
             <select name="month" id="month" onchange="MonthChg()">
@@ -258,9 +258,9 @@
                 <select id="RentSelect" onchange="UnitCal();RentValue()" class="bold-input">
                     <option value="17500">17500</option>
                     <option value="23000">23000</option>
-                    <option value="Other">Other </option>
+                    <option value="Other" width="25%">Other </option>
                 </select>
-                    <input id="Rent" style="display: none;" type="number" oninput="UnitCal();RentValue();" placeholder="Insert Amount" class="bold-input">
+                    <input id="Rent" width="75%" style="display: none;" type="number" oninput="UnitCal();RentValue();" placeholder="Insert Amount" class="bold-input">
                 </div>
             </td>
         </tr>
@@ -274,12 +274,12 @@
         </tr>
         <tr style="font-weight: 800;">
             <td>Other Charges</td>
-            <td>Deduction (-)</td>
+            <td>Deduction</td>
         </tr>
         <tr>
         <tr>
             <td><input id="Other_Chg" value="0" type="number" oninput="UnitCal();" onfocus="hideZero(this)" onblur="showZero(this)" placeholder="Insert" class="bold-input"></td>
-            <td><input id="Deduction" type="text" value="-0" oninput="enforceNegative(this); UnitCal()" class="bold-input" onfocus="hideMinusZero(this)" onblur="showMinusZero(this)"></td>
+            <td><input id="Deduction" type="text" value="0" oninput="UnitCal()" class="bold-input" onfocus="hideZero(this)" onblur="showZero(this)"></td>
         </tr>
     </table>
         

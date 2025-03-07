@@ -186,6 +186,11 @@ function loadFromFile(event) {
         }
     });
     input.click();
+
+    setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 100);
+    
 }
 
 
@@ -235,15 +240,15 @@ function RentValue() {
     let RentSelect = document.getElementById('RentSelect');
 
     if (RentSelect.value === "23000" || RentSelect.value === "17500") {
-        Rent = parseInt(RentSelect.value);
+        Rent = parseInt(RentSelect.value)||0;
         document.getElementById('Rent').style.display = 'none';
         document.getElementById('RentSelect').style.width= "100%";
     } 
         else {
             document.getElementById('Rent').style.display = 'block';
-            document.getElementById('RentSelect').style.width= "50%";
-            document.getElementById('Rent').style.width= "150%";
-            Rent = parseInt(document.getElementById('Rent').value);
+            document.getElementById('RentSelect').style.width= "25%";
+            document.getElementById('Rent').style.width= "75%";
+            Rent = parseInt(document.getElementById('Rent').value)||0;
         }
     }
 
@@ -296,9 +301,9 @@ function Cal() {
 function UnitCal() {
     Cal();
     
-    Ser_Chg = parseInt(document.getElementById('Ser_Chg').value);
-    Fix_Chg = parseInt(document.getElementById('Fix_Chg').value);
-    Other_Chg = parseInt(document.getElementById('Other_Chg').value);
+    Ser_Chg = parseInt(document.getElementById('Ser_Chg').value)||0;
+    Fix_Chg = parseInt(document.getElementById('Fix_Chg').value)||0;
+    Other_Chg = parseInt(document.getElementById('Other_Chg').value)||0;
     Deduction = parseFloat(document.getElementById('Deduction').value);
 
     TE1 = Q1 * PE1;
@@ -315,7 +320,7 @@ function UnitCal() {
 
     TotalE = TE1 + TE2 + TE3 + TE4 + TE5;
     TotalW = (Q1 + Q2 + Q3 + Q4 + Q5) * PW1;
-    Total = TotalE + TotalW  + Rent + Ser_Chg + Fix_Chg + Other_Chg + Deduction;
+    Total = TotalE + TotalW  + Rent + Ser_Chg + Fix_Chg + Other_Chg - Deduction;
 
     document.querySelectorAll('.Q1').forEach(el => el.innerHTML = Q1);
     document.querySelectorAll('.Q2').forEach(el => el.innerHTML = Q2);
@@ -340,20 +345,7 @@ function UnitCal() {
     document.getElementById('Total').innerHTML = " Rs." + Total;
 
     Cal();
-
-    
 };
-
-//Deduction Start (-)
-function enforceNegative(input) {
-    // Ensure the value always starts with '-'
-    if (!input.value.startsWith('-')) {
-        input.value = '-' + input.value.replace(/-/g, '');
-    }
-
-    // Remove non-numeric characters except the leading '-'
-    input.value = '-' + input.value.substring(1).replace(/\D/g, '');
-}
 
 
 //Input Fields Hide Show
@@ -410,18 +402,6 @@ function show22500(input) {
     }
 }
 
-function hideMinusZero(input) {
-    if (input.value === "-0") {
-        input.value = "-";
-    }
-}
-
-
-function showMinusZero(input) {
-    if (input.value === "-") {
-        input.value = "-0";
-    }
-}
 
 
 //Default This Month
@@ -487,7 +467,7 @@ function generatePDF() {
         return;
     }
 
-    const totalRent = rentValue + serviceCharge + fixedCharge + electricityCharge + waterCharge + otherCharges + deduction;
+    const totalRent = rentValue + serviceCharge + fixedCharge + electricityCharge + waterCharge + otherCharges - deduction;
 
     // Generate PDF content
     const { jsPDF } = window.jspdf;
