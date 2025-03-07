@@ -209,7 +209,7 @@
     </tr>
     <tr>
         <td>
-            <select id="roomNumberSelect" onchange="UnitCal();RoomNOChg()">
+            <select id="roomNumberSelect" onchange="RoomNOChg();UnitCal()">
                 <option hidden value="0">Select</option>
                 <script>
                     for (let i = 1; i <= 11; i++) {
@@ -222,7 +222,7 @@
             </select>
         </td>
         <td>
-            <input name="name" id="Name" placeholder="Select Room No:" oninput="UnitCal()" readonly>
+            <input name="name" id="Name" placeholder="Update Personal Details & Select Room No." oninput="UnitCal()" readonly>
         </td>
         <td>
             <select name="month" id="month" onchange="MonthChg()">
@@ -258,9 +258,9 @@
                 <select id="RentSelect" onchange="UnitCal();RentValue()" class="bold-input">
                     <option value="17500">17500</option>
                     <option value="23000">23000</option>
-                    <option value="Other">Other </option>
+                    <option value="Other" width="25%">Other </option>
                 </select>
-                    <input id="Rent" style="display: none;" type="number" oninput="UnitCal();RentValue();" placeholder="Insert Amount" class="bold-input">
+                    <input id="Rent" width="75%" style="display: none;" type="number" oninput="UnitCal();RentValue();" placeholder="Insert Amount" class="bold-input">
                 </div>
             </td>
         </tr>
@@ -274,12 +274,12 @@
         </tr>
         <tr style="font-weight: 800;">
             <td>Other Charges</td>
-            <td>Deduction (-)</td>
+            <td>Deduction</td>
         </tr>
         <tr>
         <tr>
             <td><input id="Other_Chg" value="0" type="number" oninput="UnitCal();" onfocus="hideZero(this)" onblur="showZero(this)" placeholder="Insert" class="bold-input"></td>
-            <td><input id="Deduction" type="text" value="-0" oninput="enforceNegative(this); UnitCal()" class="bold-input" onfocus="hideMinusZero(this)" onblur="showMinusZero(this)"></td>
+            <td><input id="Deduction" type="text" value="0" oninput="UnitCal()" class="bold-input" onfocus="hideZero(this)" onblur="showZero(this)"></td>
         </tr>
     </table>
         
@@ -296,8 +296,8 @@
                 <th style="font-weight: 800;">Units Consumption</th>
             </tr>
             <tr>
-                <td><input id="LastRead" oninput="UnitCal();" placeholder="Update From Personal Details" readonly></td>
-                <td><input id="CurrentRead" oninput="UnitCal();" placeholder="Insert Amount"></td>
+                <td><input id="LastRead" oninput="UnitCal();" placeholder="Update From Personal Details" type="number" readonly></td>
+                <td><input id="CurrentRead" oninput="UnitCal();" placeholder="Insert Amount" type="number"></td>
                 <td>&nbsp&nbsp</td>
                 <td><input id="Units" placeholder="Plz Update Last & Current Unit Reads" readonly></td>
             </tr>
@@ -603,6 +603,11 @@ function loadFromFile(event) {
         }
     });
     input.click();
+
+    setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 100);
+    
 }
 
 
@@ -652,15 +657,15 @@ function RentValue() {
     let RentSelect = document.getElementById('RentSelect');
 
     if (RentSelect.value === "23000" || RentSelect.value === "17500") {
-        Rent = parseInt(RentSelect.value);
+        Rent = parseInt(RentSelect.value)||0;
         document.getElementById('Rent').style.display = 'none';
         document.getElementById('RentSelect').style.width= "100%";
     } 
         else {
             document.getElementById('Rent').style.display = 'block';
-            document.getElementById('RentSelect').style.width= "50%";
-            document.getElementById('Rent').style.width= "150%";
-            Rent = parseInt(document.getElementById('Rent').value);
+            document.getElementById('RentSelect').style.width= "25%";
+            document.getElementById('Rent').style.width= "75%";
+            Rent = parseInt(document.getElementById('Rent').value)||0;
         }
     }
 
@@ -713,9 +718,9 @@ function Cal() {
 function UnitCal() {
     Cal();
     
-    Ser_Chg = parseInt(document.getElementById('Ser_Chg').value);
-    Fix_Chg = parseInt(document.getElementById('Fix_Chg').value);
-    Other_Chg = parseInt(document.getElementById('Other_Chg').value);
+    Ser_Chg = parseInt(document.getElementById('Ser_Chg').value)||0;
+    Fix_Chg = parseInt(document.getElementById('Fix_Chg').value)||0;
+    Other_Chg = parseInt(document.getElementById('Other_Chg').value)||0;
     Deduction = parseFloat(document.getElementById('Deduction').value);
 
     TE1 = Q1 * PE1;
@@ -732,7 +737,7 @@ function UnitCal() {
 
     TotalE = TE1 + TE2 + TE3 + TE4 + TE5;
     TotalW = (Q1 + Q2 + Q3 + Q4 + Q5) * PW1;
-    Total = TotalE + TotalW  + Rent + Ser_Chg + Fix_Chg + Other_Chg + Deduction;
+    Total = TotalE + TotalW  + Rent + Ser_Chg + Fix_Chg + Other_Chg - Deduction;
 
     document.querySelectorAll('.Q1').forEach(el => el.innerHTML = Q1);
     document.querySelectorAll('.Q2').forEach(el => el.innerHTML = Q2);
@@ -757,20 +762,7 @@ function UnitCal() {
     document.getElementById('Total').innerHTML = " Rs." + Total;
 
     Cal();
-
-    
 };
-
-//Deduction Start (-)
-function enforceNegative(input) {
-    // Ensure the value always starts with '-'
-    if (!input.value.startsWith('-')) {
-        input.value = '-' + input.value.replace(/-/g, '');
-    }
-
-    // Remove non-numeric characters except the leading '-'
-    input.value = '-' + input.value.substring(1).replace(/\D/g, '');
-}
 
 
 //Input Fields Hide Show
@@ -827,18 +819,6 @@ function show22500(input) {
     }
 }
 
-function hideMinusZero(input) {
-    if (input.value === "-0") {
-        input.value = "-";
-    }
-}
-
-
-function showMinusZero(input) {
-    if (input.value === "-") {
-        input.value = "-0";
-    }
-}
 
 
 //Default This Month
@@ -904,7 +884,7 @@ function generatePDF() {
         return;
     }
 
-    const totalRent = rentValue + serviceCharge + fixedCharge + electricityCharge + waterCharge + otherCharges + deduction;
+    const totalRent = rentValue + serviceCharge + fixedCharge + electricityCharge + waterCharge + otherCharges - deduction;
 
     // Generate PDF content
     const { jsPDF } = window.jspdf;
@@ -1036,6 +1016,7 @@ function generatePDF() {
     // Save the document with the generated filename
     doc.save(filename);
 }
+
 
 </script>
 
