@@ -76,8 +76,8 @@
     <!--Top Bar-->
 <h3 style="color: rgb(187, 140, 22);"><center>Hemis Aparment Bill Management System</center></h3>
 <header style="align-items: baseline; display: flex; ">
-    <button id="PDButton" onclick="PDetailsMenu()" style="margin-left: 0px; margin-right: 0px; border-right: 1px solid #197621; border-radius: 0; width: 100%;">Personal Details</button>
-    <button id="CButton" onclick="CalMenu()" style="margin-left: 0px; margin-right: 0px; border:none; border-radius: 0; width: 100%;">Calculator</button>
+    <button id="PDButton" onclick="PDetailsMenu();saveToLocalStorage()" style="margin-left: 0px; margin-right: 0px; border-right: 1px solid #197621; border-radius: 0; width: 100%;">Personal Details</button>
+    <button id="CButton" onclick="CalMenu();saveToLocalStorage()" style="margin-left: 0px; margin-right: 0px; border:none; border-radius: 0; width: 100%;">Calculator</button>
 </header>
 
 
@@ -98,17 +98,17 @@
                                 <th width="22%">Rent</th>
                             </tr>
                             <tr>
-                                <td><input type="text" id="Name${i}" style="width: 100%;"></td>
-                                <td><input type="number" id="Rent${i}" style="width: 100%;"></td>
+                                <td><input oninput="saveToLocalStorage()" type="text" id="Name${i}" style="width: 100%;"></td>
+                                <td><input oninput="saveToLocalStorage()" type="number" id="Rent${i}" style="width: 100%;"></td>
                             </tr>
                             <tr>
                                 <th width="18%">Last Unit Read</th>
                                 <th width="23%">Last Unit Read Month</th>
                             </tr>
                             <tr>
-                                <td><input type="number" id="Unit${i}" style="width: 100%;"></td>
+                                <td><input oninput="saveToLocalStorage()" type="number" id="Unit${i}" style="width: 100%;"></td>
                                 <td>
-                                    <select id="Month${i}" style="width: 100%;">
+                                    <select oninput="saveToLocalStorage()" id="Month${i}" style="width: 100%;">
                                         <option value="" disabled selected>Select Month</option>
                                         <option value="1">January</option>
                                         <option value="2">February</option>
@@ -144,7 +144,7 @@
                 !! Not Saved !!&nbsp</text></td>
             <td colspan="3" style="text-align: right;">
                 <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                <button id="Save" onclick="saveToFile(event)" style="
+                <button id="Save" onclick="saveToFile(event);saveToLocalStorage()" style="
                     background-color: #4CAF50;
                     color: white;
                     padding: 10px 20px;
@@ -403,7 +403,7 @@
 
 <h2>Sub Total:<text name="price" id="Total" style="color: Red;"></text></h2>
 
-<button onclick="generatePDF();CalToDetail()" 
+<button onclick="generatePDF();CalToDetail();saveToLocalStorage()" 
 style="background-color: #0b4810; color: white; padding: 10px 15px; font-size: 14px; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s;"
 onmouseover="this.style.backgroundColor='#197621'" 
 onmouseout="this.style.backgroundColor='#0b4810'">

@@ -1,3 +1,5 @@
+
+
 window.onload = function () {
     setTimeout(() => {
         window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
@@ -425,6 +427,44 @@ function formatNumber(input) {
         input.value = Number(value).toLocaleString();
     }
 }
+
+ // Function to save data in localStorage
+ function saveToLocalStorage() {
+    let data = [];
+    for (let i = 1; i <= 11; i++) {
+        let roomData = {
+            name: document.getElementById(`Name${i}`).value,
+            rent: document.getElementById(`Rent${i}`).value,
+            lastUnitRead: document.getElementById(`Unit${i}`).value,
+            lastUnitMonth: document.getElementById(`Month${i}`).value
+        };
+        data.push(roomData);
+    }
+    localStorage.setItem("HA_Bill_Management", JSON.stringify(data));
+    document.getElementById("SaveAlert").style.display = "none"; // Hide save alert
+}
+
+
+// Function to load data from localStorage
+function loadFromLocalStorage() {
+    let storedData = localStorage.getItem("HA_Bill_Management");
+    if (storedData) {
+        let data = JSON.parse(storedData);
+        data.forEach((room, index) => {
+            let i = index + 1;
+            document.getElementById(`Name${i}`).value = room.name;
+            document.getElementById(`Rent${i}`).value = room.rent;
+            document.getElementById(`Unit${i}`).value = room.lastUnitRead;
+            document.getElementById(`Month${i}`).value = room.lastUnitMonth;
+        });
+    }
+}
+
+
+// Auto-load data when the page loads
+window.onload = function () {
+    loadFromLocalStorage();
+};
 
 
 
