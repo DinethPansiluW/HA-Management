@@ -1,5 +1,3 @@
-
-
 window.onload = function () {
     setTimeout(() => {
         window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
@@ -23,14 +21,6 @@ function CalMenu() {
     document.getElementById('CButton').style.color = "#f5f5f5";
 }
 
-/*Personal Details On Chnage Unsaved Message
-document.querySelectorAll("#PersonalDetails input").forEach(input => {
-    input.addEventListener("input", handleInputChange);
-});
-
-function handleInputChange() {
-    document.getElementById('SaveAlert').style.display= 'block';
-}*/
 
 
 //Personal Details & Calculator Link Part

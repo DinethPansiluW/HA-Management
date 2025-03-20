@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget
+    android:versionCode="1"
+    id="com.hemisapartment.dpw"
+    version="1.3.0"
+    xmlns="http://www.w3.org/ns/widgets">
+
+    <name>Hemis Apartment</name>
+    <description>Hemis Apartment Bill Management System</description>
+    <author>Dineth Pansilu</author>
+
+    <preference name="orientation" value="portrait"/>
+</widget>

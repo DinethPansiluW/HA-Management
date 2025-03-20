@@ -1,0 +1,33 @@
+give me generate pdf like this format 
+
+(Headings Center and Bold hard)
+Hemis Apartment ( Green, Size 16)
+(Bill Month)'(Year Last Two Numbers) Rent {Blue size 14}
+(Today date and time in device this format 25th May 2025, 02:40:22 PM) {Blue size 14)
+(soft thin line)
+{End f headings
+}
+(Black)
+Room No  :
+Name  :
+Month of Bill  :
+Meter Now  : (Curent Read)
+Unit Used  : (Units)
+
+
+Bill Breakdown  (Blue, Size 14 14)
+
+Rent  : Rs.
+Service Charge  : Rs.
+Fixed Charge  : Rs.
+Electricity Charge  : Rs.
+Water Charge  : Rs.
+Other Charges  : Rs.
+Deduction : Rs.
+
+Total Bill  : Rs.  (Red size 14 bold)
+
+{Bold the i given headings and do not bold values}
+Charges of caluculation start Rs. and use this format Rs. 2345 not use this format Rs. 2345.00
+
+PDF Rename as this format Room(Number)_(Name)_(Month)'(Year last two numbners).pdf
