@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HA Bill Management System</title>
     
-    <link rel="stylesheet" href="Styles/styles.css"
+    <link rel="stylesheet" href="css/styles.css"
 
 
     </head>
@@ -83,7 +83,7 @@
                 !! Not Saved !!&nbsp</text></td>
             <td colspan="3" style="text-align: right;">
                 <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                <button id="Save" onclick="saveToFile(event);saveToLocalStorage()" style="
+                <button id="Save" onclick="saveToFile(event);saveToLocalStorage();saveToTempFile(event)" style="
                     background-color: #4CAF50;
                     color: white;
                     padding: 10px 20px;
@@ -342,7 +342,7 @@
 
 <h2>Sub Total:<text name="price" id="Total" style="color: Red;"></text></h2>
 
-<button onclick="generatePDF();CalToDetail();saveToLocalStorage()" 
+<button onclick="generatePDF();CalToDetail();saveToLocalStorage();saveToTempFile(event)" 
 style="background-color: #0b4810; color: white; padding: 10px 15px; font-size: 14px; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s;"
 onmouseover="this.style.backgroundColor='#197621'" 
 onmouseout="this.style.backgroundColor='#0b4810'">
@@ -353,7 +353,9 @@ Downlaod PDF</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="Scripts/Scripts.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/generatePDF.js"></script>
+<script src="js/saveTemp.js"></script>
 
 </body>
 </html>
