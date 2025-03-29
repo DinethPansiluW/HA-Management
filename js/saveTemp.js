@@ -27,7 +27,6 @@ function saveToTempFile(event) {
     localStorage.setItem('tempFileData', JSON.stringify(data));
     
     console.log('Data saved to temporary storage');
-    alert('Data saved to temporary storage!');
 }
 
 // Function to load data from temporary storage
@@ -68,25 +67,19 @@ function clearTempData() {
     }
     localStorage.removeItem('tempFileData');
     console.log('Temporary data cleared');
-    alert('Temporary data cleared!');
 }
 
 // Auto-load when window loads
 window.onload = function() {
-    // Check if we should load temp data (you might want to add a confirmation)
-    const shouldLoad = confirm('Load previously saved temporary data?');
+    // Check if we should load temp data
+    const shouldLoad = confirm('Do you want to load the previously inserted data?');
     
     if (shouldLoad) {
-        const success = loadTempData();
-        if (success) {
-            alert('Temporary data loaded successfully!');
-        } else {
-            alert('No temporary data found or error loading data.');
-        }
+        loadTempData();
     }
 };
 
-// Clean up when window closes (not always reliable)
+// Clean up when window closes
 window.onbeforeunload = function() {
     if (tempFileUrl) {
         URL.revokeObjectURL(tempFileUrl);
