@@ -7,7 +7,6 @@ This is an **Apartment Bill Management System**. It works **offline**. If you wa
 
 Other values can be inserted as needed.
 
-## [Hemis Apartment](https://hemisapartment.tiiny.site)  
 ## [Live Demo](https://dinethpansiluw.github.io/HA-Management/)
 
 ---
