@@ -10,3 +10,11 @@ Other values can be inserted as needed.
 ## [Live Demo](https://dinethpansiluw.github.io/HA-Management/)
 
 ---
+
+## 🧑‍💻 Author
+
+**Dineth Pansilu**  
+📫 Follow on GitHub: [DinethPansiluW](https://github.com/DinethPansiluW)
+
+---
+
